@@ -5,9 +5,8 @@ from app.retrievers.reddit_retriever import RedditRetriever
 
 class SentimentApp:
 
-    def __init__(self, reddit_submission_link, use_custom_classifier):
+    def __init__(self, reddit_submission_link):
         self.reddit_submission_link = reddit_submission_link
-        self.use_custom_classifier = use_custom_classifier
 
     def _get_data(self):
         reddit_retriever = RedditRetriever()
@@ -15,7 +14,7 @@ class SentimentApp:
         return comment_list
 
     def _analyze_data(self, comment_list):
-        sentiment_processor = SentimentProcessor(custom=self.use_custom_classifier)
+        sentiment_processor = SentimentProcessor()
         result = sentiment_processor.process_sentiment(comment_list, self.reddit_submission_link)
         return result
 
