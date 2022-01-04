@@ -3,16 +3,11 @@ import math
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 from app.obj.result import Result
-from app.processors.custom_sentiment_classifier import CustomSentimentClassifier
-
 
 class SentimentProcessor:
     
-    def __init__(self, custom=False):
-        if custom:
-            self.analyzer = CustomSentimentClassifier()
-        else:
-            self.analyzer = SentimentIntensityAnalyzer()
+    def __init__(self):
+        self.analyzer = SentimentIntensityAnalyzer()
 
     def _find_corresponding_sentiment(self, score):
         if score <= -0.4:
