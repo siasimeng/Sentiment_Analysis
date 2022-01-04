@@ -11,10 +11,9 @@ app.config.from_object(Config)
 def main():
     if request.method == 'POST':
         url = request.form.get('url')
-        custom_classifier = True if 'custom' in request.form else False
         
         try:
-            sp = SentimentApp(url, custom_classifier)
+            sp = SentimentApp(url)
             result = sp.run()
             return render_template('result.html', result=result, error=None)
         except Exception as e:
