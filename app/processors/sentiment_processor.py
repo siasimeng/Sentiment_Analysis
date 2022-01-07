@@ -10,7 +10,7 @@ from app.obj.result import Result
 class SentimentProcessor:
     
     def __init__(self):
-        with open('vectoriser.pickle', 'rb') as file:
+        with open('app/processors/vectoriser.pickle', 'rb') as file:
             self.vectoriser = pickle.load(file)
     
         # Load the LR Model.
