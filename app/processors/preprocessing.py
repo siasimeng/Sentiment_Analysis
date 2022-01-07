@@ -1,4 +1,5 @@
 import nltk
+nltk.download('stopwords')
 from nltk.tokenize import word_tokenize, RegexpTokenizer # tokenize words
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
