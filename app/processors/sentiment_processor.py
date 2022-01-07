@@ -10,14 +10,12 @@ from app.obj.result import Result
 class SentimentProcessor:
     
     def __init__(self):
-        file = open('vectoriser.pickle', 'rb')
-        self.vectoriser = pickle.load(file)
-        file.close()
+        with open('vectoriser.pickle', 'rb') as file:
+            self.vectoriser = pickle.load(file)
     
         # Load the LR Model.
-        file = open('Sentiment-LR.pickle', 'rb')
-        self.model = pickle.load(file)
-        file.close()
+        with open('Sentiment-LR.pickle', 'rb') as file:
+            self.model = pickle.load(file)
 
     def predict(self, comments):
         finaldata = []
