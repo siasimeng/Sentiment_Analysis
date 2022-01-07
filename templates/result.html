@@ -9,7 +9,9 @@
 
     <div class="container pt-5 col-lg-8 col-12">
         <div class="pt-2 pb-2 border border-primary rounded" style="border-width: 8px !important">
-        <img src='figure.jpg'/>
+        {% autoescape off %}
+        {{ plot_div }}
+        {% endautoescape %}
         </div>
         
         <h1 class="fw-bold text-center pt-5 pb-2">Most Positive Comments</h1>
