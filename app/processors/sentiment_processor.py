@@ -65,8 +65,7 @@ class SentimentProcessor:
         ax.pie(values, labels = labels, explode = myexplode, shadow = True, colors = mycolors)
         ax.legend()
         ax.set_title("Positive vs Negative Text(%)")
-        fig.savefig('figure.jpg')
-        plt_div = plot(fig, output_type='div', include_plotlyjs=False)
+        result.fig = fig
 
         pos_df = df.loc[df['sentiment'] == "Positive"]
         pos_df = pos_df.sort_values('sentiment',ascending = False).head(5)
