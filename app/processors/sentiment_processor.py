@@ -63,6 +63,7 @@ class SentimentProcessor:
         ax.pie(values, labels = labels, explode = myexplode, shadow = True, colors = mycolors)
         ax.legend()
         ax.set_title("Positive vs Negative Text(%)")
+        fig.savefig('figure.jpg')
         result.fig = fig
 
         pos_df = df.loc[df['sentiment'] == "Positive"]
