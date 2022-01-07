@@ -14,7 +14,7 @@ class SentimentProcessor:
             self.vectoriser = pickle.load(file)
     
         # Load the LR Model.
-        with open('Sentiment-LR.pickle', 'rb') as file:
+        with open('app/processors/Sentiment-LR.pickle', 'rb') as file:
             self.model = pickle.load(file)
 
     def predict(self, comments):
