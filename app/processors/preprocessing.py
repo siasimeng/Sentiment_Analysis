@@ -1,6 +1,7 @@
 import nltk
 nltk.download('stopwords')
 nltk.download('punkt')
+nltk.download('wordnet')
 from nltk.tokenize import word_tokenize, RegexpTokenizer # tokenize words
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
