@@ -8,9 +8,7 @@
     </div>
 
     <div class="container pt-5 col-lg-8 col-12">
-        {% autoescape off %}
-        {{ plot_div }}
-        {% endautoescape %}
+        <img src=result.fig alt="Chart"> 
         
         <h1 class="fw-bold text-center pt-5 pb-2">Most Positive Comments</h1>
         {% for (comment, score) in result.most_positive.items() %}
