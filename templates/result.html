@@ -10,20 +10,26 @@
     <div class="container pt-5 col-lg-8 col-12">
         
         <h1 class="fw-bold text-center pt-5 pb-2">Most Positive Comments</h1>
-        {% for (comment) in result.most_positive.items() %}
+        {% for (comment, score) in result.most_positive.items() %}
             <figure class="bg-light p-3">
                 <blockquote class="blockquote">
                     <p>{{ comment }}</p>
                 </blockquote>
+                <figcaption class="blockquote-footer mb-0">
+                    Score: {{ score }}%
+                </figcaption>
             </figure>
         {% endfor %}
 
         <h1 class="fw-bold text-center pt-4 pb-2">Most Negative Comments</h1>
-        {% for (comment) in result.most_negative.items() %}
+        {% for (comment, score) in result.most_negative.items() %}
             <figure class="bg-light p-3">
                 <blockquote class="blockquote">
                     <p>{{ comment }}</p>
                 </blockquote>
+                <figcaption class="blockquote-footer mb-0">
+                    Score: {{ score }}%
+                </figcaption>
             </figure>
         {% endfor %}
     </div>
