@@ -14,8 +14,11 @@ itsdangerous==1.1.0
 jedi==0.18.0
 Jinja2==2.10.1
 MarkupSafe==1.1.1
+math
 matplotlib
 nltk==3.4.5
+numpy
+pandas
 parso==0.8.2
 pexpect==4.8.0
 pickleshare==0.7.5
@@ -24,6 +27,7 @@ prawcore==1.0.1
 prompt-toolkit==3.0.20
 ptyprocess==0.7.0
 Pygments==2.10.0
+re
 requests==2.22.0
 six==1.12.0
 traitlets==4.3.3
