@@ -7,7 +7,7 @@ decorator==5.1.0
 Flask==1.0.3
 Flask-WTF==0.14.2
 gunicorn==20.1.0
-idna==2.8
+idna
 ipython==7.16.1
 ipython-genutils==0.2.0
 itsdangerous==1.1.0
@@ -23,7 +23,6 @@ prawcore==1.0.1
 prompt-toolkit==3.0.20
 ptyprocess==0.7.0
 Pygments==2.10.0
-pyplot
 requests==2.22.0
 six==1.12.0
 traitlets==4.3.3
