@@ -13,10 +13,11 @@ class SentimentApp:
         comment_list = reddit_retriever.get_data(self.reddit_submission_link)
         return comment_list
 
-    #def _analyze_data(self, comment_list):
-    #    sentiment_processor = SentimentProcessor()
+    def _analyze_data(self, comment_list):
+        sentiment_processor = SentimentProcessor()
+        result = 0
     #    result = sentiment_processor.process_sentiment(comment_list, self.reddit_submission_link)
-    #    return result
+        return result
 
     def run(self):
         comments = self._get_data()
