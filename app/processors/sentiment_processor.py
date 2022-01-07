@@ -4,6 +4,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import pickle
 import sklearn
+from plotly.offline import plot
+import plotly.graph_objs as go
 
 from app.processors.preprocessing import preprocess
 from app.obj.result import Result
@@ -64,7 +66,7 @@ class SentimentProcessor:
         ax.legend()
         ax.set_title("Positive vs Negative Text(%)")
         fig.savefig('figure.jpg')
-        result.fig = fig
+        plt_div = plot(fig, output_type='div', include_plotlyjs=False)
 
         pos_df = df.loc[df['sentiment'] == "Positive"]
         pos_df = pos_df.sort_values('sentiment',ascending = False).head(5)
