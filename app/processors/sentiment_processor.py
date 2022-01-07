@@ -1,73 +1,80 @@
 import math
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import pickle
 
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-
+from app.processors.preprocessing import preprocess
 from app.obj.result import Result
 
 class SentimentProcessor:
     
     def __init__(self):
-        self.analyzer = SentimentIntensityAnalyzer()
+        file = open('vectoriser.pickle', 'rb')
+        self.vectoriser = pickle.load(file)
+        file.close()
+    
+        # Load the LR Model.
+        file = open('Sentiment-LR.pickle', 'rb')
+        self.model = pickle.load(file)
+        file.close()
 
-    def _find_corresponding_sentiment(self, score):
-        if score <= -0.4:
-            return 'extremely negative'
-        elif score <= -0.25:
-            return 'very negative'
-        elif score <= -0.1:
-            return 'negative'
-        elif score <= -0.04:
-            return 'slightly negative'
-        elif score < 0.04:
-            return 'neutral'
-        elif score < 0.1:
-            return 'slightly positive'
-        elif score < 0.25:
-            return 'positive'
-        elif score < 0.4:
-            return 'very positive'
-        else:
-            return 'extremely positive'
-
-    def _get_compound_score(self, comment_list):
-        total_score = 0
-        for comment in comment_list:
-            total_score += self.analyzer.polarity_scores(comment)['compound']
-        avg_score = total_score / len(comment_list)
-        return (round(avg_score * 100, 1), self._find_corresponding_sentiment(avg_score).upper())
-
-    def _get_most_positive(self, comment_list):
-        num_top_comments = math.ceil(len(comment_list) / 20) if len(comment_list) < 100 else 5
-        top_comments = {}
-        for comment in comment_list:
-            score = round(self.analyzer.polarity_scores(comment)['compound'] * 100, 1)
-            if len(top_comments) < num_top_comments:
-                top_comments[comment] = score
+    def predict(self, comments):
+        finaldata = []
+       
+        processed_comments = []
+        for x in comments:
+            x = preprocess.sentiment_preprocess(x)
+            x = ' '.join(x)
+            processed_comments.append(x)
+    
+    
+        commentsdata = self.vectoriser.transform(processed_comments)
+        sentiment = self.model.predict(commentsdata)
+    
+        # print(model.classes_)
+        sentiment_prob = self.model.predict_proba(commentsdata)
+    
+        for index,tweet in enumerate(comments):
+            if sentiment[index] == 1:
+                sentiment_probFinal = sentiment_prob[index][1]
             else:
-                least_pos_comment = min(top_comments, key=top_comments.get)
-                if score > top_comments[least_pos_comment]:
-                    del top_comments[least_pos_comment]
-                    top_comments[comment] = score
-        return top_comments
-
-    def _get_most_negative(self, comment_list):
-        num_top_comments = math.ceil(len(comment_list) / 20) if len(comment_list) < 100 else 5
-        top_comments = {}
-        for comment in comment_list:
-            score = round(self.analyzer.polarity_scores(comment)['compound'] * 100, 1)
-            if len(top_comments) < num_top_comments:
-                top_comments[comment] = score
-            else:
-                least_neg_comment = max(top_comments, key=top_comments.get)
-                if score < top_comments[least_neg_comment]:
-                    del top_comments[least_neg_comment]
-                    top_comments[comment] = score
-        return top_comments
+                sentiment_probFinal = sentiment_prob[index][0]
+            
+            sentiment_probFinal2 = "{}%".format(round(sentiment_probFinal*100,2))
+            finaldata.append((tweet, sentiment[index], sentiment_probFinal2))
+           
+        # Convert the list into a Pandas DataFrame.
+        df = pd.DataFrame(finaldata, columns = ['comments','sentiment', 'probability'])
+        df = df.replace([-1,1], ["Negative","Positive"])
+        return df
 
     def process_sentiment(self, comment_list, url):
         result = Result()
-        result.compound_score = self._get_compound_score(comment_list)
-        result.most_positive = self._get_most_positive(comment_list)
-        result.most_negative = self._get_most_negative(comment_list)
+        df = self.predict(comment_list)
+        positive = round(np.count_nonzero(df['sentiment'] == "Positive")/len(df['sentiment'])*100,2)
+        negative = round(np.count_nonzero(df['sentiment'] == "Negative")/len(df['sentiment'])*100,2)
+
+        labels = ['Positive','Negative']
+        values = np.array([positive,negative])
+        myexplode = [0.1, 0]
+        mycolors = ["blue", "red"]
+
+        fig,ax = plt.subplots(figsize=(6,5))
+        ax.pie(values, labels = labels, explode = myexplode, shadow = True, colors = mycolors)
+        ax.legend()
+        ax.set_title("Positive vs Negative Text(%)")
+        result.fig = fig
+
+        pos_df = df.loc[df['sentiment'] == "Positive"]
+        pos_df = pos_df.sort_values('sentiment',ascending = False).head(5)
+        pos_df = pos_df[['comments', 'probability']]
+        result.most_positive = pos_df.set_index('comments').T.to_dict('list')
+
+        neg_df = df.loc[df['sentiment'] == "Negative"]
+        neg_df = neg_df.sort_values('sentiment',ascending = False).head(5)
+        neg_df = neg_df[['comments', 'probability']]
+        result.most_negative = neg_df.set_index('comments').T.to_dict('list')
+
         result.url = url
         return result
