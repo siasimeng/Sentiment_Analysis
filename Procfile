@@ -1,1 +1,1 @@
-web: gunicorn sentimentify:app
+web: gunicorn sentiment_analysis:app
