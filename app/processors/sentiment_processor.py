@@ -55,6 +55,8 @@ class SentimentProcessor:
         df = self.predict(comment_list)
         positive = round(np.count_nonzero(df['sentiment'] == "Positive")/len(df['sentiment'])*100,2)
         negative = round(np.count_nonzero(df['sentiment'] == "Negative")/len(df['sentiment'])*100,2)
+        result.positive = positive
+        result.negative = negative
 
         labels = ['Positive','Negative']
         values = np.array([positive,negative])
