@@ -8,7 +8,7 @@
     </div>
 
     <div class="container pt-5 col-lg-8 col-12">
-        <img src=result.fig alt="Chart"> 
+        <img src={{url}} alt="Chart" height="auto" width="100%">
         
         <h1 class="fw-bold text-center pt-5 pb-2">Most Positive Comments</h1>
         {% for (comment, score) in result.most_positive.items() %}
