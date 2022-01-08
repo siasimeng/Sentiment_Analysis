@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 
 from app.sentiment_app import SentimentApp
 from config import Config
+from io import BytesIO
 import matplotlib.pyplot as plt
 
 
