@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 
 from app.sentiment_app import SentimentApp
 from config import Config
+import matplotlib.pyplot as plt
 
 
 app = Flask(__name__)
@@ -36,6 +37,7 @@ def main():
             print(e)
             return render_template('main.html', error=e)
     return render_template('main.html', error=None)
+
 
 if __name__ == '__main__':
     app.run()
