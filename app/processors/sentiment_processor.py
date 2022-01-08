@@ -58,25 +58,14 @@ class SentimentProcessor:
         result.positive = positive
         result.negative = negative
 
-        labels = ['Positive','Negative']
-        values = np.array([positive,negative])
-        myexplode = [0.1, 0]
-        mycolors = ["blue", "red"]
-
-        fig,ax = plt.subplots(figsize=(6,5))
-        ax.pie(values, labels = labels, explode = myexplode, shadow = True, colors = mycolors)
-        ax.legend()
-        ax.set_title("Positive vs Negative Text(%)")
-        result.fig = fig
-
         pos_df = df.loc[df['sentiment'] == "Positive"]
-        pos_df = pos_df.sort_values('sentiment',ascending = False).head(5)
-        pos_df = pos_df[['comments', 'probability']]
+        pos_df = pos_df.sort_values('probabilty',ascending = False).head(5)
+        pos_df = pos_df['comments', 'probability']
         result.most_positive = pos_df.set_index('comments').T.to_dict('list')
 
         neg_df = df.loc[df['sentiment'] == "Negative"]
-        neg_df = neg_df.sort_values('sentiment',ascending = False).head(5)
-        neg_df = neg_df[['comments', 'probability']]
+        neg_df = neg_df.sort_values('probabilty',ascending = False).head(5)
+        neg_df = neg_df['comments', 'probability']
         result.most_negative = neg_df.set_index('comments').T.to_dict('list')
 
         result.url = url
