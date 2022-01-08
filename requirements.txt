@@ -1,5 +1,6 @@
 appnope==0.1.2
 backcall==0.2.0
+base64
 certifi==2019.6.16
 chardet==3.0.4
 Click==7.0
