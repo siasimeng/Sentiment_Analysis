@@ -42,7 +42,7 @@ def main():
         
         except Exception as e:
             print(e)
-            return render_template('main.html', error=e)
+            return render_template('main.html', error="Reddit url not valid.")
     return render_template('main.html', error=None)
 
 
