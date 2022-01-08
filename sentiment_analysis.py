@@ -39,6 +39,7 @@ def main():
             img.seek(0)
             plot_url = base64.b64encode(img.getvalue()).decode('utf8')
             return render_template('result.html', result=result, plot_url=plot_url, error=None)
+        
         except Exception as e:
             print(e)
             return render_template('main.html', error=e)
