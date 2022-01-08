@@ -40,7 +40,7 @@ def plot():
 
     plt.savefig('static/images/plot.png')
 
-    return render_template('plot.html', url='/static/images/plot.png')
+    return render_template('result.html', url='/static/images/plot.png')
 
 if __name__ == '__main__':
     app.run()
