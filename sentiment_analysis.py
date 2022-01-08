@@ -31,8 +31,8 @@ def main():
             # plot title
             plt.title('My bar chart!')
 
-            plt.savefig('static/images/plot.png')
-            return render_template('result.html', result=result, url='/static/images/plot.png', error=None)
+            plt.savefig('/var/www/uploads/plot.png')
+            return render_template('result.html', result=result, url='/var/www/uploads/plot.png', error=None)
         except Exception as e:
             print(e)
             return render_template('main.html', error=e)
