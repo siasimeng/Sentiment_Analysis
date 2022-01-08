@@ -5,6 +5,7 @@ from config import Config
 from io import BytesIO
 import base64
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 app = Flask(__name__)
