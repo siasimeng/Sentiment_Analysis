@@ -60,12 +60,12 @@ class SentimentProcessor:
 
         pos_df = df.loc[df['sentiment'] == "Positive"]
         pos_df = pos_df.sort_values('probability',ascending = False).head(5)
-        pos_df = pos_df['comments', 'probability']
+        pos_df = pos_df[['comments', 'probability']]
         result.most_positive = pos_df.set_index('comments').T.to_dict('list')
 
         neg_df = df.loc[df['sentiment'] == "Negative"]
         neg_df = neg_df.sort_values('probability',ascending = False).head(5)
-        neg_df = neg_df['comments', 'probability']
+        neg_df = neg_df[['comments', 'probability']]
         result.most_negative = neg_df.set_index('comments').T.to_dict('list')
 
         result.url = url
