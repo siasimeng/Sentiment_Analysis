@@ -16,6 +16,7 @@ def main():
         try:
             sp = SentimentApp(url)
             result = sp.run()
+            img = BytesIO()
             left = [1, 2, 3, 4, 5]
             # heights of bars
             height = [10, 24, 36, 40, 5]
@@ -31,8 +32,11 @@ def main():
             # plot title
             plt.title('My bar chart!')
 
-            plt.savefig('/var/www/uploads/plot.png')
-            return render_template('result.html', result=result, url='/var/www/uploads/plot.png', error=None)
+            plt.savefig(img, format='png')
+            plt.close()
+            img.seek(0)
+            plot_url = base64.b64encode(img.getvalue()).decode('utf8')
+            return render_template('result.html', result=result, plot_url=plot_url, error=None)
         except Exception as e:
             print(e)
             return render_template('main.html', error=e)
